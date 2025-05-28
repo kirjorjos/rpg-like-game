@@ -39,32 +39,39 @@ public class Player extends Entity {
 		if (keyH.keyPressed(KeyEvent.VK_W)) {
 			y -= speed;
 			direction = Directions.up;
-		}
-		if (keyH.keyPressed(KeyEvent.VK_A)) {
+		} else if (keyH.keyPressed(KeyEvent.VK_A)) {
 			x -= speed;
 			direction = Directions.left;
-		}
-		if (keyH.keyPressed(KeyEvent.VK_S)) {
+		} else if (keyH.keyPressed(KeyEvent.VK_S)) {
 			y += speed;
 			direction = Directions.down;
-		}
-		if (keyH.keyPressed(KeyEvent.VK_D)) {
+		} else if (keyH.keyPressed(KeyEvent.VK_D)) {
 			x += speed;
 			direction = Directions.right;
+		}
+		
+		spriteCounter++;
+		if (spriteCounter > 10) {
+			spriteNumber = spriteNumber*-1+1;
+			spriteCounter = 0;
 		}
 	}
 	
 	public void draw(Graphics2D g2) {
-		BufferedImage texture = switch (direction) {
+		int textureIndex = switch (direction) {
 		case Directions.up:
-			yield playerSprites.getSprite(Sprite.up1.ordinal());
+			yield Sprite.up1.ordinal();
 		case Directions.left:
-			yield playerSprites.getSprite(Sprite.left1.ordinal());
+			yield Sprite.left1.ordinal();
 		case Directions.right:
-			yield playerSprites.getSprite(Sprite.right1.ordinal());
+			yield Sprite.right1.ordinal();
 		case Directions.down:
-			yield playerSprites.getSprite(Sprite.down1.ordinal());
+			yield Sprite.down1.ordinal();
 		};
+		
+		textureIndex += spriteNumber;
+		
+		BufferedImage texture = playerSprites.getSprite(textureIndex);
 		
 		g2.drawImage(texture, x, y, GamePanel.tileSize, GamePanel.tileSize, null);
 	}

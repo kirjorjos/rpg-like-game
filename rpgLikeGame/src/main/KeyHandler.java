@@ -13,7 +13,6 @@ public class KeyHandler implements KeyListener {
 
 	@Override
 	public void keyPressed(KeyEvent e) {
-		System.out.println("Key pressed: " + e.getKeyCode());
 	    try {
 	        keysPressedDown[e.getKeyCode()] = true;
 	    } catch (ArrayIndexOutOfBoundsException ignored) {

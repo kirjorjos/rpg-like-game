@@ -10,15 +10,18 @@ public class Entity {
 	public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
 	public Directions direction;
 	
+	public double spriteCounter = 0;
+	public double spriteNumber = 0;
+	
 	public enum Sprite {
-		up1,
-		up2,
-		down1,
-		down2,
 		left1,
 		left2,
 		right1,
-		right2
+		right2,
+		down1,
+		down2,
+		up1,
+		up2
 	}
 	
 	public enum Directions {

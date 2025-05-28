@@ -23,7 +23,7 @@ public class GamePanel extends JPanel implements Runnable {
 	private final int screenWidth = tileSize * maxScreenCol;
 	private final int screenHeight = tileSize * maxScreenRow;
 	private final int FPS = 60;
-	private final int msPerFrame = 1000/FPS;
+	private final double nanoPerFrame = 1000000000/FPS;
 	private Thread gameThread;
 	private KeyHandler keyH = new KeyHandler();
 	Player player = new Player(this, keyH);
@@ -44,20 +44,20 @@ public class GamePanel extends JPanel implements Runnable {
 	@Override
 	public void run() {
 		
-		long nextFrameTime = System.currentTimeMillis();
+		double delta = 0;
+		long lastTime = System.nanoTime();
+		long currentTime;
+		
 		while (gameThread != null) {
-			update();
-			repaint();
-			nextFrameTime = System.currentTimeMillis() + msPerFrame;
-			long sleepTime = nextFrameTime-System.currentTimeMillis();
-			if (sleepTime < 0) {
-				sleepTime = 0;
-				System.out.println("Game is lagging!");
-			}
-			try {
-				Thread.sleep(sleepTime);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			currentTime = System.nanoTime();
+			
+			delta += (currentTime - lastTime) / nanoPerFrame;
+			lastTime = currentTime;
+			
+			if (delta >= 1) {
+				update();
+				repaint();
+				delta --;
 			}
 		}
 	}
@@ -71,5 +71,11 @@ public class GamePanel extends JPanel implements Runnable {
 		Graphics2D g2 = (Graphics2D)g;
 		player.draw(g2);
 		g2.dispose();
+	}
+	
+	@Override
+	public void addNotify() {
+	    super.addNotify();
+	    requestFocusInWindow();
 	}
 }
