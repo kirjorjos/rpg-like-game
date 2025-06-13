@@ -13,11 +13,16 @@ public class Spritesheet {
 	private BufferedImage sheet;
 	private BufferedImage[] sprites;
 	
-	public Spritesheet(String path, int spriteWidth, int spriteHeight, int spriteCount) throws IOException {
+	public Spritesheet(String path, int spriteWidth, int spriteHeight) {
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
-		this.spriteCount = spriteCount;
-		this.sheet = ImageIO.read(getClass().getResourceAsStream(path));
+		try {
+			this.sheet = ImageIO.read(getClass().getResourceAsStream(path));
+		} catch (IOException e) {
+			System.out.println("Invalid spritesheet given.");
+			e.printStackTrace();
+		}
+		spriteCount = (sheet.getWidth() / spriteWidth) * (sheet.getHeight() / spriteHeight);
 		this.sprites = loadSprites();
 	}
 	

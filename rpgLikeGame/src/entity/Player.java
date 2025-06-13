@@ -11,7 +11,6 @@ import main.Spritesheet;
 
 public class Player extends Entity {
 
-	private static final int ACTION_COUNT = 8;
 	GamePanel gp;
 	KeyHandler keyH;
 	Spritesheet playerSprites;
@@ -23,16 +22,7 @@ public class Player extends Entity {
 		y = 100;
 		speed = 4;
 		direction = Directions.down;
-		try {
-			playerSprites = new Spritesheet("/player/player.png", GamePanel.baseTileSize, GamePanel.baseTileSize, ACTION_COUNT);
-		} catch (IOException e) {
-			System.out.println("Unable to find player textures.");
-			e.printStackTrace();
-		}
-	}
-	
-	public void getPlayerImage() {
-		
+		playerSprites = new Spritesheet("/entity/player.png", GamePanel.baseTileSize, GamePanel.baseTileSize);
 	}
 	
 	public void update() {
@@ -51,7 +41,7 @@ public class Player extends Entity {
 		}
 		
 		spriteCounter++;
-		if (spriteCounter > 10) {
+		if (spriteCounter > 20) {
 			spriteNumber = spriteNumber*-1+1;
 			spriteCounter = 0;
 		}
